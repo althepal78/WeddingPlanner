@@ -1,0 +1,43 @@
+﻿@model Wedding
+
+
+<div>
+    <h1 style="color: rebeccapurple;">Welcome to @Model.WedOne and @Model.WedTwo Wedding!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</h1>
+    <h2>@Model.WedDate</h2>
+    <h2 id="addy">@Model.WedAddy</h2>
+    <h3>Guests: </h3>
+    <ul>
+        @if (Model.RSVPs.Count == 0)
+        {
+
+            <li>No One likes y'all !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</li>
+        }
+
+        @foreach (RSVP r in @Model.RSVPs)
+        {
+            <li>@r.Guests.FirstName</li>
+        }
+
+    </ul>
+    <div class="holder">
+            <div id="floating-panel">
+                <div>
+                    <div >
+                        <input
+                            type="text"
+                            id="from"
+                            placeholder="From Addrress"
+                        />
+                    </div>
+                </div>
+                <b>Mode of Travel</b>
+                <select id="mode">
+                    <option value="DRIVING">Driving</option>
+                    <option value="TRANSIT">Transit</option>
+                    <option value="BICYCLING">Bicycling</option>
+                    <option value="WALKING">Walking</option>
+                </select>
+            </div>
+            <div id="map"></div>
+        </div>
+</div>

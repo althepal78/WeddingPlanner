@@ -1,0 +1,26 @@
+﻿@model Wedding
+
+<div >
+    <form method="post" asp-action="AddWedding" >
+        <div class="text-warning" asp-validation-summary="All"></div>
+        <div class="m-2">
+            <label asp-for="WedOne"></label>
+            <input asp-for="WedOne" />
+         </div>
+
+           <div  class="m-2">
+            <label asp-for="WedTwo"></label>
+            <input asp-for="WedTwo" />
+         </div>
+           <div  class="m-2">
+            <label asp-for="WedDate"></label>
+            <input asp-for="WedDate" />
+         </div>
+           <div  class="m-2">
+            <label asp-for="WedAddy"></label>
+            <input asp-for="WedAddy" />
+         </div>
+         <button class="btn  btn-outline-secondary" type="submit">Add Weddding</button>
+    </form>
+</div>
+

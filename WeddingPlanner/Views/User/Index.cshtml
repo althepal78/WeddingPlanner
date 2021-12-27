@@ -1,0 +1,12 @@
+﻿@model User
+
+@if (Model == null)
+{
+    <h2>Loading... </h2>
+}
+else
+{
+    <h1>@Model.FirstName</h1>
+
+    <h2><a asp-action="AddWedding" asp-controller="Wedding">Add Wedding</a></h2>
+}
