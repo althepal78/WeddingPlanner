@@ -24,11 +24,11 @@ namespace WeddingPlanner.Controllers
         public IActionResult Dashboard()
         {
             User userInDB = GetUser();
-            if(userInDB == null)
+            if (userInDB == null)
             {
                 return RedirectToAction("Logout", "User");
             }
-            ViewBag.User = userInDB;
+
 
             List<Wedding> AllWeddings = _DBContext.Weddings
                                         .Include(cr => cr.Creator)
@@ -36,6 +36,7 @@ namespace WeddingPlanner.Controllers
                                         .ThenInclude(guest => guest.Guests)
                                         .ToList();
 
+            ViewBag.User = userInDB.UserId;
             return View(AllWeddings);
         }
 
@@ -43,6 +44,9 @@ namespace WeddingPlanner.Controllers
         [HttpGet]
         public IActionResult AddWedding()
         {
+            User userInDB = GetUser();
+            ViewBag.User = userInDB.UserId;
+
             return View();
         }
 
@@ -56,8 +60,10 @@ namespace WeddingPlanner.Controllers
                 if (ModelState.IsValid)
                 {
                     wed.UserID = userInDB.UserId;
+                    wed.Creator = userInDB;
                     _DBContext.Weddings.Add(wed);
                     _DBContext.SaveChanges();
+                    ViewBag.User = userInDB.UserId;
                     return RedirectToAction("ShowWed", new { id = wed.WedId });
                 }
 
@@ -75,14 +81,14 @@ namespace WeddingPlanner.Controllers
                 .ThenInclude(g => g.Guests)
                 .Include(cr => cr.Creator)
                 .FirstOrDefault(wedid => wedid.WedId == id);
-                        
+
 
             if (wed == null)
             {
                 return RedirectToAction("Dashboard", "Wedding");
             }
-            
-
+            User userInDB = GetUser();
+            ViewBag.User = userInDB.UserId;
 
             return View(wed);
         }
@@ -91,11 +97,15 @@ namespace WeddingPlanner.Controllers
         public IActionResult Delete(int wedId)
         {
             Wedding Canceled = _DBContext.Weddings
+                                .Include(rs => rs.RSVPs) // I forgot this
                                 .FirstOrDefault(wed => wed.WedId == wedId);
-            if(Canceled == null)
+
+
+            if (Canceled == null)
             {
                 return RedirectToAction("Logout", "User");
             }
+
             _DBContext.Weddings.Remove(Canceled);
             _DBContext.SaveChanges();
 
@@ -125,6 +135,38 @@ namespace WeddingPlanner.Controllers
             _DBContext.SaveChanges();
 
             return RedirectToAction("Dashboard");
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int wedID)
+        {
+            Wedding wed = _DBContext.Weddings.FirstOrDefault(wed => wed.WedId == wedID);
+
+            if (wed == null)
+            {
+                return RedirectToAction("Logout", "User");
+            }
+
+            return View(wed);
+        }
+
+        [HttpPost]
+        public IActionResult Update(int wedID)
+        {
+            Wedding wed = _DBContext.Weddings.FirstOrDefault(wed => wed.WedId == wedID);
+
+            if (wed == null)
+            {
+                return RedirectToAction("Logout", "User");
+            }
+            User userInDB = GetUser();
+            ViewBag.User = userInDB.UserId;
+            Console.WriteLine(userInDB.UserId + " user in data base and add wed. user id  " + wed.UserID);
+
+            _DBContext.Weddings.Update(wed);
+            _DBContext.SaveChanges();
+            ViewBag.User = userInDB.UserId;
+            return RedirectToAction("ShowWed", wed);
         }
 
     }

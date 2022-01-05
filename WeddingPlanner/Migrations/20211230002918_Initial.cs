@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace WeddingPlanner.Migrations
 {
-    public partial class UserModel : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,33 +58,33 @@ namespace WeddingPlanner.Migrations
                 {
                     RSVPId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(type: "int", nullable: true),
-                    WeddingWedId = table.Column<int>(type: "int", nullable: true)
+                    WeddingID = table.Column<int>(type: "int", nullable: true),
+                    UserID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_RSVRs", x => x.RSVPId);
                     table.ForeignKey(
-                        name: "FK_RSVRs_Users_UserId",
-                        column: x => x.UserId,
+                        name: "FK_RSVRs_Users_UserID",
+                        column: x => x.UserID,
                         principalTable: "Users",
                         principalColumn: "UserId");
                     table.ForeignKey(
-                        name: "FK_RSVRs_Weddings_WeddingWedId",
-                        column: x => x.WeddingWedId,
+                        name: "FK_RSVRs_Weddings_WeddingID",
+                        column: x => x.WeddingID,
                         principalTable: "Weddings",
                         principalColumn: "WedId");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_RSVRs_UserId",
+                name: "IX_RSVRs_UserID",
                 table: "RSVRs",
-                column: "UserId");
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RSVRs_WeddingWedId",
+                name: "IX_RSVRs_WeddingID",
                 table: "RSVRs",
-                column: "WeddingWedId");
+                column: "WeddingID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Weddings_UserID",

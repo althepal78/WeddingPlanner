@@ -12,8 +12,8 @@ using WeddingPlanner.Context;
 namespace WeddingPlanner.Migrations
 {
     [DbContext(typeof(WeddingContext))]
-    [Migration("20211225021728_RSVPModel2")]
-    partial class RSVPModel2
+    [Migration("20211230002918_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

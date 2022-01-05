@@ -49,8 +49,11 @@ button.accept-policy[b-l8pyi8tiun] {
 }
 /* _content/WeddingPlanner/Views/Wedding/ShowWed.cshtml.rz.scp.css */
 #map[b-uql97tkywb] {
-    border: 1px dashed white;
-    height: 50vh;
     width: 50vw;
-    padding: 10px;
+    border: 2px dashed white;
+    height: 50vh;
+}
+#panel[b-uql97tkywb] {
+    height: 50vh;
+    overflow: auto;
 }

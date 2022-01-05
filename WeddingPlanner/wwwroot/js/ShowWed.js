@@ -1,41 +1,116 @@
-﻿function initMap() {
-    const directionsService = new google.maps.DirectionsService();
-    const directionsRenderer = new google.maps.DirectionsRenderer();
+﻿let map, wedAd, marker;
+let geocoder, start;
+let markers = [];
 
-    var mapOptions = {
-        mapId: "2027f865d98e0d30",
-        center: { lat: 27.964, lng: -82.452 },
-        zoom: 12,
-    }
+function codeAddress(geocoder, wedAd) {
 
+    geocoder.geocode({ 'address': wedAd }, function (results, status) {
+        if (status == 'OK') {
+            map = new google.maps.Map(document.getElementById("map"), {
+                mapId: "deec05c97bc801c2",
+                zoom: 12,
+                center: results[0].geometry.location,
+            });
 
-    const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            marker = new google.maps.Marker({
+                position: results[0].geometry.location,
+                map,
+                title: "Hello World!",
+            });
 
-    directionsRenderer.setMap(map);
+            const contentString =
+                '<div id="content">' +
+                '<div id="siteNotice">' +
+                "</div>" +
+                '<h5 class="text-dark" id="firstHeading" class="firstHeading">' +
+                wedAd +
+                '</h5 > ' +
 
-    const onChangeHandler = function () {
-        calculateAndDisplayRoute(directionsService, directionsRenderer);
-    };
+                "</div>";
 
-    document.getElementById("from").addEventListener("change", onChangeHandler);
-    
+            const infowindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+
+            marker.addListener("click", () => {
+                infowindow.open({
+                    anchor: marker,
+                    map,
+                    shouldFocus: false,
+                });
+            });
+
+        } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+        }
+    });
+
+    initAutocomplete();
+
 }
 
-function calculateAndDisplayRoute(directionsService, directionsRenderer) {
-    directionsService
-        .route({
-            origin: {
-                query: document.getElementById("from").value,
-            },
-            destination: {
-                query: document.getElementById("addy").innerHTML
-            },
-            travelMode: google.maps.TravelMode.DRIVING,
-        })
+function initMap() {
+    //map = new google.maps.Map(document.getElementById("map"), {
+    //    center: { lat: 27.964157, lng: -82.452606 },
+    //    zoom: 8,
+    //    mapId: "deec05c97bc801c2",
+    //});
+
+    // to established the variable 
+    geocoder = new google.maps.Geocoder();
+    wedAd = document.getElementById("wedAddy").value;
+
+    codeAddress(geocoder, wedAd);
+
+}
+
+
+function initAutocomplete() {
+    start = document.getElementById("start");
+
+    // Create the autocomplete object, restricting the search predictions to
+    // addresses in the US and Canada.
+    autocomplete = new google.maps.places.Autocomplete(start, {
+        componentRestrictions: { country: ["us", "ca"] },
+        fields: ["address_components", "geometry"],
+        types: ["address"],
+    });
+
+}
+
+const btn = document.getElementById("useBtn");
+
+btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    setMapOnAll(null);
+    const panel = document.getElementById("panel");
+    panel.style.visibility = 'visible';
+
+    const directionsRenderer = new google.maps.DirectionsRenderer({
+        draggable: true,
+        map,
+        panel: panel,
+    });
+    const directionsService = new google.maps.DirectionsService();
+
+
+    const userAddress = document.getElementById('start').value;
+    const destination = document.getElementById("wedAddy").value;
+
+    directionsService.route({
+        origin: userAddress,
+        destination: destination,
+        travelMode: google.maps.TravelMode.DRIVING,
+    })
         .then((response) => {
+            console.log(response)
             directionsRenderer.setDirections(response);
         })
         .catch((e) => console.log("Directions request failed due to " + status));
+})
+
+function setMapOnAll(map) {
+    for (let i = 0; i < markers.length; i++) {
+        markers[i].setMap(map);
+    }
 }
-
-

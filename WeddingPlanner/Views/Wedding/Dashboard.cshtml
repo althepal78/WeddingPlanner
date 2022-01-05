@@ -25,20 +25,27 @@ else
                     <td>@wed.WedDate</td>
                     <td>@wed.RSVPs.Count</td>
 
-                    @if(@wed.Creator.UserId == @ViewBag.User.UserId)
+                    @if(@wed.Creator.UserId == @ViewBag.User)
                     {
-                        <td> <a asp-action="Delete"
+                        <td> 
+                            <a asp-action="Delete"
                                 asp-controller="Wedding"
-                                asp-route-wedId="@wed.WedId">Cancel Wedding</a> </td>
+                                asp-route-wedId="@wed.WedId">Cancel Wedding</a> 
+                            &nbsp;
+                            <a asp-action="Edit"
+                               asp-controller="Wedding"
+                               asp-route-wedId="@wed.WedId"> Edit
+                               </a>
+                            </td>
                     }
                     else
                     {
-                        if(@wed.RSVPs.Any(u => u.UserID == ViewBag.User.UserId))
+                        if(@wed.RSVPs.Any(u => u.UserID == ViewBag.User))
                         {
                             <td> <a asp-action="NotGoing"
                                     asp-controller="Wedding"
                                     asp-route-wedId="@wed.WedId"
-                                    asp-route-userId="@ViewBag.User.UserId">Not Going</a>
+                                    asp-route-userId="@ViewBag.User">Cancel RSVP</a>
                            </td>
                         }
                         else
@@ -46,7 +53,7 @@ else
                                  <td> <a asp-action="Going"
                                     asp-controller="Wedding"
                                     asp-route-wedId="@wed.WedId"
-                                    asp-route-userId="@ViewBag.User.UserId">Going</a>
+                                    asp-route-userId="@ViewBag.User">RSVP</a>
                            </td>
                         }
                     }

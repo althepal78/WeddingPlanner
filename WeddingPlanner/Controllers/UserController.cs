@@ -27,6 +27,7 @@ namespace WeddingPlanner.Controllers
         public IActionResult Index()
         {
             User userInDb = GetUser();
+            ViewBag.User = userInDb.UserId;
             return View(userInDb);
         }
 
@@ -57,6 +58,7 @@ namespace WeddingPlanner.Controllers
 
                 setSession(user.UserId);
 
+                ViewBag.User = user.UserId;
                 return RedirectToAction("Dashboard","Wedding");
             }
             return View();
@@ -89,6 +91,7 @@ namespace WeddingPlanner.Controllers
                 }
 
                 setSession(userinDB.UserId);
+                ViewBag.User = userinDB.UserId;
 
                 return RedirectToAction("Dashboard", "Wedding");
 
