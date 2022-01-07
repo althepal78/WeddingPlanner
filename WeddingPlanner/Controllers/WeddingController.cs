@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WeddingPlanner.Context;
 using WeddingPlanner.Models;
+using WeddingPlanner.ViewModel;
 
 namespace WeddingPlanner.Controllers
 {
@@ -146,27 +147,59 @@ namespace WeddingPlanner.Controllers
             {
                 return RedirectToAction("Logout", "User");
             }
+            User userInDB = GetUser();
+            ViewBag.User = userInDB.UserId;
+            UpdateWedding uw = new UpdateWedding();
+          
+            uw.Id = wedID;
+            uw.WedDate = wed.WedDate;
+            uw.WedAddy = wed.WedAddy;
+            uw.WedOne = wed.WedOne;
+            uw.WedTwo = wed.WedTwo;
 
-            return View(wed);
+            return View(uw);
         }
 
         [HttpPost]
-        public IActionResult Update(int wedID)
+        public IActionResult Update(int id, UpdateWedding update)
         {
-            Wedding wed = _DBContext.Weddings.FirstOrDefault(wed => wed.WedId == wedID);
+            Wedding wed = _DBContext.Weddings.FirstOrDefault(wed => wed.WedId == id);
 
             if (wed == null)
             {
+                Console.WriteLine("Inside the wed == null ");
                 return RedirectToAction("Logout", "User");
             }
+            if (update == null) {
+                Console.WriteLine("Inside the update == null ");
+                return RedirectToAction("Logout", "User");
+            }
+            update.Id = id;
+
             User userInDB = GetUser();
             ViewBag.User = userInDB.UserId;
-            Console.WriteLine(userInDB.UserId + " user in data base and add wed. user id  " + wed.UserID);
+            if (userInDB != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    wed.WedOne = update.WedOne;
+                    wed.WedTwo = update.WedTwo;
+                    wed.WedAddy = update.WedAddy;
+                    wed.WedDate = update.WedDate;
 
-            _DBContext.Weddings.Update(wed);
-            _DBContext.SaveChanges();
-            ViewBag.User = userInDB.UserId;
-            return RedirectToAction("ShowWed", wed);
+                    _DBContext.Weddings.Update(wed);
+                    _DBContext.SaveChanges();
+
+                    Console.WriteLine(id + " if model state is valid");
+
+                    return RedirectToAction("ShowWed", new { id = id });
+                }
+            }
+
+
+            Console.WriteLine(id + " if model state is wrong");
+            return RedirectToAction("Edit", new { wedID = id });
+
         }
 
     }

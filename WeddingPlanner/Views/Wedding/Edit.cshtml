@@ -1,5 +1,5 @@
-﻿@model Wedding
-
+﻿@using WeddingPlanner.ViewModel
+@model UpdateWedding
 @if (Model == null)
 {
     <h2>OOps</h2>
@@ -7,7 +7,9 @@
 else
 {
     <div>
-        <form method="post" asp-action="Update" asp-controller="Wedding" asp-route-wedID="@Model.WedId">
+
+        <form method="post" asp-action="Update" asp-controller="Wedding">
+            <input type="hidden" asp-for="Id" />
             <div class="text-warning" asp-validation-summary="All"></div>
             <div class="m-2">
                 <label asp-for="WedOne"></label>
@@ -29,4 +31,12 @@ else
             <button class="btn btn-outline-secondary" type="submit">Update</button>
         </form>
     </div>
+}
+
+@section Scripts{
+    <script src="~/js/site.js"></script>
+    @{
+
+        <partial name="_ValidationScriptsPartial" />
+    }
 }
