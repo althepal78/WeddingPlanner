@@ -22,3 +22,8 @@
       I am planning to add a method that will delete the wedding if it has already happened. So you added a wedding to the database and then it happened yesterday, I want
   it to delete automatically. I might add another database to hold the deleted ones for up to 3 years so that I can find it for future purposes. That is debatable :) 
 </p>
+
+```cs
+  Console.WriteLine(id + " if model state is valid");
+  
+```
