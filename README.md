@@ -1,13 +1,17 @@
 # WeddingPlanner
 <p>
-      Wedding planner is created with .NET 6 MVC 6 and is a project I am usign to learn CRUD operations. CRUD stands for create, read, update and delete.
+      Wedding planner is created with Entity Framework, .NET 6,and MVC. It is a project I am usign to learn CRUD operations. CRUD stands for create, read, update and delete.
    Thes operations are used all the time with databases.
 </p>
 
 ## Google Maps API
 <p>
       Additionally, with this project I learned how to use the Google Maps API and got it working with the addresss that is provided to the Add Wedding section.
-  Furthermore, I was able to make a directions sections. I will eventuallly add a print me on the directions because not everyone likes using their GPS on their phone.
+  Furthermore, I was able to make a directions sections.
+</p>
+### Future Google Map API sections
+<p>
+      I will eventuallly add a print me on the directions because not everyone likes using their GPS on their phone.
 </p>
 
 ## Currently
