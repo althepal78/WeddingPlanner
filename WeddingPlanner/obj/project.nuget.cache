@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "fjLzUXwleKHjqg0FyXrNmHTfuNZpPpDJJeszbyee4sdtmEpVN3LW7rzJ+UXCVLdpfD/dsckysbqI2IJdAi/EAg==",
+  "dgSpecHash": "dspTq1vIaBtLqOvGE0mV1zmaaIlHYEwvIOrJJwLNw4aCcIxJAolfs35371vdIAna3t6PM4uK6zP+bn5M7+mkVw==",
   "success": true,
   "projectFilePath": "D:\\dotNet\\WeddingPlanner\\WeddingPlanner\\WeddingPlanner.csproj",
   "expectedPackageFiles": [
@@ -8,6 +8,7 @@
     "C:\\Users\\bigda\\.nuget\\packages\\messagepack\\2.1.152\\messagepack.2.1.152.nupkg.sha512",
     "C:\\Users\\bigda\\.nuget\\packages\\messagepack.annotations\\2.1.152\\messagepack.annotations.2.1.152.nupkg.sha512",
     "C:\\Users\\bigda\\.nuget\\packages\\messagepackanalyzer\\2.1.152\\messagepackanalyzer.2.1.152.nupkg.sha512",
+    "C:\\Users\\bigda\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.1\\microsoft.aspnetcore.authentication.google.6.0.1.nupkg.sha512",
     "C:\\Users\\bigda\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.0\\microsoft.aspnetcore.razor.language.6.0.0.nupkg.sha512",
     "C:\\Users\\bigda\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\5.0.0\\microsoft.bcl.asyncinterfaces.5.0.0.nupkg.sha512",
     "C:\\Users\\bigda\\.nuget\\packages\\microsoft.build\\17.0.0\\microsoft.build.17.0.0.nupkg.sha512",

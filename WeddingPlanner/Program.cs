@@ -2,13 +2,22 @@ using Microsoft.EntityFrameworkCore;
 using WeddingPlanner.Context;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
+var configuration = builder.Configuration;
+
+services.AddAuthentication().AddGoogle(googleOptions =>
+{
+    googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
+    googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+});
+
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+services.AddControllersWithViews();
 
-builder.Services.AddSession();
+services.AddSession();
 
-builder.Services.AddDbContext<WeddingContext>(options => options.UseSqlServer(
+services.AddDbContext<WeddingContext>(options => options.UseSqlServer(
          builder.Configuration.GetConnectionString("DBInfo")
  ));
 

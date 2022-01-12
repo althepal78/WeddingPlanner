@@ -21,10 +21,7 @@ namespace WeddingPlanner.Validation
             {
                 return new ValidationResult("You can't schedule a wedding in the past fool");
             }
-            if(ValidationResult.Success == null)
-            {
-                return ValidationResult.Success;
-            }
+         
             return ValidationResult.Success;
         }
     }

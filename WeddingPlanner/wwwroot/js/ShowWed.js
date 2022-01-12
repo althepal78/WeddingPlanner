@@ -114,3 +114,12 @@ function setMapOnAll(map) {
         markers[i].setMap(map);
     }
 }
+
+
+//// This is the section to add the validations of pastdate to the front
+
+$.validator.addMethod('pastdate', function (value, element, params) {
+    return value === value.PastDate();
+});
+
+$.validator.unobtrusive.adapters.addBool("pastdate");

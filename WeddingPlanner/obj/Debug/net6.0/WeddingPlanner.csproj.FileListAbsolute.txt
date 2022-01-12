@@ -261,3 +261,4 @@ D:\dotNet\WeddingPlanner\WeddingPlanner\bin\Debug\net6.0\zh-Hant\Microsoft.CodeA
 D:\dotNet\WeddingPlanner\WeddingPlanner\bin\Debug\net6.0\runtimes\win-arm\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 D:\dotNet\WeddingPlanner\WeddingPlanner\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 D:\dotNet\WeddingPlanner\WeddingPlanner\obj\Debug\net6.0\scopedcss\Views\Wedding\ShowWed.cshtml.rz.scp.css
+D:\dotNet\WeddingPlanner\WeddingPlanner\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.Google.dll
