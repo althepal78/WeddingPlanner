@@ -3,26 +3,18 @@ using System.ComponentModel.DataAnnotations;
 
 namespace WeddingPlanner.Validation
 {
-    public class PastDateAttribute : ValidationAttribute, IClientModelValidator
+    public class PastDateAttribute : ValidationAttribute
     {
-        public PastDateAttribute()
-        {
-            ErrorMessage = "You can't schedule a wedding in the past fool";
-        }
-        public void AddValidation(ClientModelValidationContext context)
-        {
-            context.Attributes.Add("data-val", "true");
-            context.Attributes.Add("data-val-pastdate", ErrorMessage);
-        }
+        public string getErrorMessage() => $"You can't schedule a wedding in the past fool";
 
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-            if(DateTime.Now > (DateTime)value)
+            if (DateTime.Now > DateTime.Parse(value.ToString()))
             {
-                return new ValidationResult("You can't schedule a wedding in the past fool");
+                return new ValidationResult(getErrorMessage());
             }
-         
             return ValidationResult.Success;
         }
+
     }
 }

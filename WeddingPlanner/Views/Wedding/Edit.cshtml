@@ -1,42 +1,33 @@
 ﻿@using WeddingPlanner.ViewModel
-@model UpdateWedding
-@if (Model == null)
-{
-    <h2>OOps</h2>
-}
-else
-{
-    <div>
+@model WedUpdate
 
-        <form method="post" asp-action="Update" asp-controller="Wedding">
-            <input type="hidden" asp-for="Id" />
-            <div class="text-warning" asp-validation-summary="All"></div>
-            <div class="m-2">
-                <label asp-for="WedOne"></label>
-                <input asp-for="WedOne" />
-            </div>
 
-            <div class="m-2">
-                <label asp-for="WedTwo"></label>
-                <input asp-for="WedTwo" />
-            </div>
-            <div class="m-2">
-                <label asp-for="WedDate"></label>
-                <input asp-for="WedDate" />
-            </div>
-            <div class="m-2">
-                <label asp-for="WedAddy"></label>
-                <input asp-for="WedAddy" />
-            </div>
-            <button class="btn btn-outline-secondary" type="submit">Update</button>
-        </form>
-    </div>
-}
+<div >
+    <form method="post" asp-action="Edit" >
+        <div class="text-warning" asp-validation-summary="All"></div>
+        <input type='hidden' asp-for="WedId" />
+        <div class="m-2">
+            <label asp-for="WedOne"></label>
+            <input asp-for="WedOne" />
+         </div>
 
+           <div  class="m-2">
+            <label asp-for="WedTwo"></label>
+            <input asp-for="WedTwo" />
+         </div>
+           <div  class="m-2">
+            <label asp-for="WedDate"></label>
+            <input asp-for="WedDate" />
+         </div>
+           <div  class="m-2">
+            <label asp-for="WedAddy"></label>
+            <input asp-for="WedAddy" />
+         </div>
+         <button class="btn  btn-outline-secondary" type="submit">Add Weddding</button>
+    </form>
+</div>
 @section Scripts{
-    <script src="./js/ShowWed.js"></script>
     @{
-
         <partial name="_ValidationScriptsPartial" />
     }
 }

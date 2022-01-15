@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using WeddingPlanner.Validation;
 
 namespace WeddingPlanner.ViewModel
 {
-    public class UpdateWedding
+    public class WedUpdate
     {
-        [Required]
-        public int Id { get; set; } 
+        public int WedId { get; set; }
 
         [Required, MinLength(1), MaxLength(50), Display(Name = "Wedder One")]
         public string? WedOne { get; set; }
@@ -22,5 +20,7 @@ namespace WeddingPlanner.ViewModel
 
         [Required, MinLength(25), MaxLength(1500), Display(Name = "Wedding Adrress")]
         public string? WedAddy { get; set; }
+
+
     }
 }

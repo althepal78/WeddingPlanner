@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using WeddingPlanner.Context;
 using WeddingPlanner.Models;
 using WeddingPlanner.ViewModel;
@@ -20,10 +21,25 @@ namespace WeddingPlanner.Controllers
             return _DBContext.Users.FirstOrDefault(us => us.UserId == HttpContext.Session.GetInt32("UserID"));
         }
 
+        private void DeleteOldWedding()
+        {
+            
+            foreach (Wedding date in _DBContext.Weddings.ToList())
+            {
+                var result = DateTime.Compare(date.WedDate , DateTime.Now);
+                // r < 0 before this date and time, r=0 both date and time exactly the same, r> 0 It is after this date or time
+                if (result < 0)
+                {
+                    _DBContext.Weddings.Remove(date);
+                    _DBContext.SaveChanges();
+                }
+            }
+        }
 
         [HttpGet]
         public IActionResult Dashboard()
         {
+            DeleteOldWedding();
             User userInDB = GetUser();
             if (userInDB == null)
             {
@@ -41,6 +57,7 @@ namespace WeddingPlanner.Controllers
             return View(AllWeddings);
         }
 
+      
 
         [HttpGet]
         public IActionResult AddWedding()
@@ -94,6 +111,9 @@ namespace WeddingPlanner.Controllers
             return View(wed);
         }
 
+
+        // this is to delete the wedding by user's choice
+
         [HttpGet]
         public IActionResult Delete(int wedId)
         {
@@ -138,69 +158,46 @@ namespace WeddingPlanner.Controllers
             return RedirectToAction("Dashboard");
         }
 
+
         [HttpGet]
         public IActionResult Edit(int wedID)
         {
-            Wedding wed = _DBContext.Weddings.FirstOrDefault(wed => wed.WedId == wedID);
+            Wedding wed = _DBContext.Weddings.FirstOrDefault(w => w.WedId == wedID);
+            WedUpdate wu = new WedUpdate();
 
             if (wed == null)
             {
                 return RedirectToAction("Logout", "User");
             }
-            User userInDB = GetUser();
-            ViewBag.User = userInDB.UserId;
-            UpdateWedding uw = new UpdateWedding();
-          
-            uw.Id = wedID;
-            uw.WedDate = wed.WedDate;
-            uw.WedAddy = wed.WedAddy;
-            uw.WedOne = wed.WedOne;
-            uw.WedTwo = wed.WedTwo;
 
-            return View(uw);
+            wu.WedId = wedID;
+            wu.WedOne = wed.WedOne;
+            wu.WedAddy = wed.WedAddy;
+            wu.WedTwo = wed.WedTwo;
+            wu.WedDate = wed.WedDate;
+            return View(wu);
         }
 
         [HttpPost]
-        public IActionResult Update(int id, UpdateWedding update)
+        public IActionResult Edit(WedUpdate update)
         {
-            Wedding wed = _DBContext.Weddings.FirstOrDefault(wed => wed.WedId == id);
+            Wedding wed = _DBContext.Weddings.FirstOrDefault(w => w.WedId == update.WedId);
 
-            if (wed == null)
+            if (!ModelState.IsValid)
             {
-                Console.WriteLine("Inside the wed == null ");
-                return RedirectToAction("Logout", "User");
-            }
-            if (update == null) {
-                Console.WriteLine("Inside the update == null ");
-                return RedirectToAction("Logout", "User");
-            }
-            update.Id = id;
-
-            User userInDB = GetUser();
-            ViewBag.User = userInDB.UserId;
-            if (userInDB != null)
-            {
-                if (ModelState.IsValid)
-                {
-                    wed.WedOne = update.WedOne;
-                    wed.WedTwo = update.WedTwo;
-                    wed.WedAddy = update.WedAddy;
-                    wed.WedDate = update.WedDate;
-
-                    _DBContext.Weddings.Update(wed);
-                    _DBContext.SaveChanges();
-
-                    Console.WriteLine(id + " if model state is valid");
-
-                    return RedirectToAction("ShowWed", new { id = id });
-                }
+                return View(update);
             }
 
+            wed.WedDate = update.WedDate;
+            wed.WedAddy = update.WedAddy;
+            wed.UpdatedOn = DateTime.Now;
+            wed.WedOne = update.WedOne;
+            wed.WedTwo = update.WedTwo;
 
-            Console.WriteLine(id + " if model state is wrong");
-            return RedirectToAction("Edit", new { wedID = id });
+            _DBContext.Weddings.Update(wed);
+            _DBContext.SaveChanges();
 
+            return RedirectToAction("Dashboard");
         }
-
     }
 }

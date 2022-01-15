@@ -21,8 +21,15 @@
                         </button>
 
 
-                        <!-- this is to add the signin section to use google to sign in  --> 
-                        <div class="g-signin2 " data-onsuccess="onSignIn"></div>
+                        <!-- this is to add the signin section to use google to sign in  -->
+                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                            <i class="bi bi-google"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-primary btn-floating mx-1">
+                            <i class="bi bi-linkedin"></i>
+                        </button>
+
 
 
                     </div>
@@ -64,7 +71,6 @@
 </section>
 @section Scripts
 {
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
     @{
     <partial name="_ValidationScriptsPartial" />
     }

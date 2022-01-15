@@ -24,6 +24,8 @@ namespace WeddingPlanner.Controllers
         {
             return _DBContext.Users.FirstOrDefault(us => us.UserId == HttpContext.Session.GetInt32("UserID"));
         }
+
+
         public IActionResult Index()
         {
             User userInDb = GetUser();
@@ -34,7 +36,7 @@ namespace WeddingPlanner.Controllers
         [HttpGet]
         public IActionResult Register()
         {
-
+        
             return View();
         }
 
@@ -59,7 +61,7 @@ namespace WeddingPlanner.Controllers
                 setSession(user.UserId);
 
                 ViewBag.User = user.UserId;
-                return RedirectToAction("Dashboard","Wedding");
+                return RedirectToAction("Dashboard", "Wedding");
             }
             return View();
         }
@@ -68,12 +70,14 @@ namespace WeddingPlanner.Controllers
         [HttpGet]
         public IActionResult Login()
         {
+            
             return View();
         }
 
         [HttpPost]
         public IActionResult Login(Login login)
         {
+
             User userinDB = _DBContext.Users.FirstOrDefault(em => em.EMail == login.LoginEMail);
             if (ModelState.IsValid)
             {
@@ -108,7 +112,7 @@ namespace WeddingPlanner.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-   
+
     }
-    
+
 }
